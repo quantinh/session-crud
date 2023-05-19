@@ -3,6 +3,10 @@ use Mojo::Base 'Mojolicious::Controller', -signatures;
 use strict;
 use warnings;
 use DBI;
+use Data::Dumper;
+use JSON;
+use Mojo::UserAgent;
+
 
 # Connect to database postgres
 sub connect_db_pg {
@@ -188,5 +192,36 @@ sub logout {
   my $self = shift;
   $self->session(expires => 1);
   return $self->redirect_to('/form-login');
+}
+
+sub testApi {
+  my $self  = shift;
+  my $dbh   = connect_db_pg();
+  my $sth   = $dbh->prepare(qq(SELECT * FROM actor ORDER BY actor_id;));
+  # Show error if false 
+  my $rv    = $sth->execute() or die $DBI::errstr;
+  # show item put out
+  ($rv < 0) ? print $DBI::errstr : print "Operation done successfully\n"; 
+  # array of data
+  my @rows;
+  while (my $row = $sth->fetchrow_hashref) {
+    push @rows, $row;
+  }
+  # print Dumper(@rows),"\n";
+  $self->render(
+    json => \@rows,
+    status => 200
+  );
+  $sth->finish();
+  $dbh->disconnect();
+  return;
+}
+
+sub renderUI {
+  my $self = shift;
+  #Invalid error
+  $self->render(
+    template  => 'admin/test',
+  );
 }
 1;

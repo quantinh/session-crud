@@ -41,5 +41,10 @@ sub startup {
   
   # router to controller file ActorController.pm action logout
   $r->get('/logout')->to('ActorController#logout');
+
+  #====================== API =====================
+  $r->get('/api/hello')->to('ActorController#testApi');
+  $r->get('/api/call')->to('ActorController#renderUI');
+
 }
 1;
