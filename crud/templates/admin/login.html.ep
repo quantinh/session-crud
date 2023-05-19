@@ -1,0 +1,30 @@
+% layout 'admin';
+% title 'Login Page';
+<h1 class="text-success heading-success">Login</h1>
+<form method="POST" action="/login">
+      <div class="form-group">
+            <label>Username</label> 
+            <input
+                  class="form-control" 
+                  type="text" 
+                  name="username"
+                  value="" 
+            />
+      </div>
+      % if ($error->{username}) {
+            <div class="mb-3 text-danger"><%= $error->{username} %></div>
+      % }
+      <label>Password</label>
+      <div class="form-group">
+            <input
+                  class="form-control" 
+                  type="password"  
+                  name="password"
+                  value=""  
+            />
+      </div> 
+      % if ($error->{password}) {
+            <div class="mb-3 text-danger"><%= $error->{password} %></div>
+      % }
+      <button type="submit" class="btn btn-primary">Login</button>
+</form>

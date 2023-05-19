@@ -1,0 +1,45 @@
+% layout 'admin';
+% title 'List page';
+% if (my $success = flash 'success') {
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= $success %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+% }
+<a href= "/form-add" class="mb-3 mr-2 btn btn-secondary">+ Add actor</a>
+<table id="customers" class="customers display">
+  <thead>
+    <tr>
+      <th>actor_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>last_update</th>
+      <th>actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    % foreach my $row (@$rows) {
+      <tr>
+        <td class="text-center"><%= $row->{'actor_id'} %></td>
+        <td><%= $row->{'first_name'} %></td>
+        <td><%= $row->{'last_name'} %></td>
+        <td><%= $row->{'last_update'} %></td>
+        <td class="action">
+          <a href= "/form-update/<%= $row->{'actor_id'} %>" class="mr-2 btn btn-info">Edit</a>
+          <a href= "/delete/<%= $row->{'actor_id'} %>" class="mr-2 btn btn-danger">Delete</a>
+        </td>
+      </tr>
+    % }
+  </tbody>
+</table>
+<script>
+  $(document).ready(function () {
+    $("#customers").DataTable();
+  });
+</script>
+
+
+
+
