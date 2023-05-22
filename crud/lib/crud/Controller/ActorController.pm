@@ -193,7 +193,15 @@ sub logout {
   $self->session(expires => 1);
   return $self->redirect_to('/form-login');
 }
-
+# Action renderUI
+sub renderUI {
+  my $self = shift;
+  #Invalid error
+  $self->render(
+    template  => 'admin/test',
+  );
+}
+# Action Test api
 sub testApi {
   my $self  = shift;
   my $dbh   = connect_db_pg();
@@ -215,13 +223,5 @@ sub testApi {
   $sth->finish();
   $dbh->disconnect();
   return;
-}
-
-sub renderUI {
-  my $self = shift;
-  #Invalid error
-  $self->render(
-    template  => 'admin/test',
-  );
 }
 1;
